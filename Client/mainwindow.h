@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <dialog.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,7 +16,23 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_aceptar_clicked();
+
+    void on_aceptar_nodo_clicked();
+
+    void on_actionVentana_1_triggered();
+
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
+
+    enum Column{
+        NODO, LISTA
+    };
+
 };
 #endif // MAINWINDOW_H
