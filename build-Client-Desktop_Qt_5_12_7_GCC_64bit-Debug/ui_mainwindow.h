@@ -19,6 +19,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableWidget>
+#include <QtWidgets/QToolButton>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -45,6 +46,14 @@ public:
     QTableWidget *tableWidget;
     QPushButton *pushButton_4;
     QPushButton *pushButton_5;
+    QToolButton *toolButton;
+    QLabel *label_7;
+    QLineEdit *lineEdit_5;
+    QLineEdit *lineEdit_6;
+    QLineEdit *lineEdit_7;
+    QLabel *label_8;
+    QLabel *label_9;
+    QLabel *label_10;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -53,7 +62,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setEnabled(true);
-        MainWindow->resize(700, 500);
+        MainWindow->resize(700, 535);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         label = new QLabel(centralwidget);
@@ -86,13 +95,13 @@ public:
         label_5->setGeometry(QRect(70, 330, 91, 16));
         label_6 = new QLabel(centralwidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(70, 350, 81, 17));
+        label_6->setGeometry(QRect(70, 360, 81, 17));
         lineEdit_3 = new QLineEdit(centralwidget);
         lineEdit_3->setObjectName(QString::fromUtf8("lineEdit_3"));
-        lineEdit_3->setGeometry(QRect(160, 320, 71, 25));
+        lineEdit_3->setGeometry(QRect(160, 330, 71, 21));
         lineEdit_4 = new QLineEdit(centralwidget);
         lineEdit_4->setObjectName(QString::fromUtf8("lineEdit_4"));
-        lineEdit_4->setGeometry(QRect(160, 350, 71, 25));
+        lineEdit_4->setGeometry(QRect(160, 360, 71, 21));
         pushButton_2 = new QPushButton(centralwidget);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
         pushButton_2->setEnabled(false);
@@ -110,10 +119,34 @@ public:
         tableWidget->setGeometry(QRect(420, 30, 231, 341));
         pushButton_4 = new QPushButton(centralwidget);
         pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
-        pushButton_4->setGeometry(QRect(440, 390, 101, 25));
+        pushButton_4->setGeometry(QRect(550, 380, 101, 25));
         pushButton_5 = new QPushButton(centralwidget);
         pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
-        pushButton_5->setGeometry(QRect(90, 10, 131, 25));
+        pushButton_5->setGeometry(QRect(170, 10, 131, 25));
+        toolButton = new QToolButton(centralwidget);
+        toolButton->setObjectName(QString::fromUtf8("toolButton"));
+        toolButton->setGeometry(QRect(320, 430, 71, 24));
+        label_7 = new QLabel(centralwidget);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+        label_7->setGeometry(QRect(20, 430, 181, 17));
+        lineEdit_5 = new QLineEdit(centralwidget);
+        lineEdit_5->setObjectName(QString::fromUtf8("lineEdit_5"));
+        lineEdit_5->setGeometry(QRect(210, 430, 41, 25));
+        lineEdit_6 = new QLineEdit(centralwidget);
+        lineEdit_6->setObjectName(QString::fromUtf8("lineEdit_6"));
+        lineEdit_6->setGeometry(QRect(270, 430, 41, 25));
+        lineEdit_7 = new QLineEdit(centralwidget);
+        lineEdit_7->setObjectName(QString::fromUtf8("lineEdit_7"));
+        lineEdit_7->setGeometry(QRect(160, 390, 71, 21));
+        label_8 = new QLabel(centralwidget);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+        label_8->setGeometry(QRect(70, 390, 67, 17));
+        label_9 = new QLabel(centralwidget);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+        label_9->setGeometry(QRect(20, 470, 131, 17));
+        label_10 = new QLabel(centralwidget);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+        label_10->setGeometry(QRect(160, 470, 67, 17));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -149,6 +182,11 @@ public:
         pushButton->setText(QApplication::translate("MainWindow", "Eliminar arista", nullptr));
         pushButton_4->setText(QApplication::translate("MainWindow", "Mostrar grafo", nullptr));
         pushButton_5->setText(QApplication::translate("MainWindow", "Conectar al Server", nullptr));
+        toolButton->setText(QApplication::translate("MainWindow", "Generar", nullptr));
+        label_7->setText(QApplication::translate("MainWindow", "Generar camino mas corto:", nullptr));
+        label_8->setText(QApplication::translate("MainWindow", "Peso:", nullptr));
+        label_9->setText(QApplication::translate("MainWindow", "Camino mas corto:", nullptr));
+        label_10->setText(QString());
     } // retranslateUi
 
 };

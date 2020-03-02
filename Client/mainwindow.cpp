@@ -125,27 +125,32 @@ void MainWindow::on_aceptar_clicked()
         crearVentanaDialogo();
         break;
     }
+    ui->lineEdit->setText("");
 }
 
 void MainWindow::on_aceptar_nodo_clicked()
 {
     QString a=ui->lineEdit_2->text();
     int op = a.split(" ")[0].toInt();
+    ui->lineEdit_2->setText("");
     enviar_msj(to_string(op));
 }
 
 // Insertar arista.
 void MainWindow::on_pushButton_2_clicked(){
-    cout<<"INGRESE NODO DE INICIO:";
-    //cin>>ini;
     QString a=ui->lineEdit_3->text();
     int ini = a.split(" ")[0].toInt();
-    cout<<"INGRESE NODO FINAL:";
-    //cin>>fin;
+
     QString b=ui->lineEdit_4->text();
     int fin = b.split(" ")[0].toInt();
 
-    string ambos_datos = to_string(ini) + "," + to_string(fin);
+    QString c=ui->lineEdit_7->text();
+    int fin1 = c.split(" ")[0].toInt();
+
+    string ambos_datos = to_string(ini) + "," + to_string(fin) + "," + to_string(fin1);
+    ui->lineEdit_3->setText("");
+    ui->lineEdit_4->setText("");
+    ui->lineEdit_7->setText("");
     enviar_msj(ambos_datos);
 }
 
@@ -224,4 +229,33 @@ void MainWindow::on_pushButton_4_clicked(){
 void MainWindow::on_pushButton_5_clicked()
 {
     conexion();
+}
+
+void MainWindow::on_toolButton_clicked(){
+    enviar_msj("g_d");
+    QString a=ui->lineEdit_5->text();
+    int ini = a.split(" ")[0].toInt();
+
+    QString b=ui->lineEdit_6->text();
+    int fin = b.split(" ")[0].toInt();
+
+    string ambos_datos = to_string(ini) + "," + to_string(fin);
+    ui->lineEdit_5->setText("");
+    ui->lineEdit_6->setText("");
+    enviar_msj(ambos_datos);
+
+    // Recibir msj
+    char buf[4096];
+    //		Wait for response
+    memset(buf, 0, 4096);
+    int bytesReceived = recv(sock, buf, 4096, 0);
+    if (bytesReceived == -1){
+        cout << "There was an error getting response from server\r\n";
+    }
+    else{
+        //Mostrar camino mas corto
+        cout << string(buf, bytesReceived) << endl;
+        //ui->label_10->setText("");
+        ui->label_10->setText(QString::fromStdString(string(buf, bytesReceived)));
+    }
 }

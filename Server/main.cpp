@@ -7,6 +7,7 @@
 #include <string.h>
 #include <string>
 #include <sstream>
+#include "Grafo.cpp"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ struct nodo{
 struct arista{
     struct nodo *destino;//puntero al nodo de llegada
     struct arista *sgte;
+    int peso;
 };
 
 typedef struct nodo *Tnodo;//  Tipo Nodo
@@ -30,9 +32,10 @@ int temporal;
 
 void entro_mensaje(string mensaje);
 void insertar_nodo(string valor);
-void mostrar_grafo();
+void mostrar_grafo(int a, int b);
 void agrega_arista(Tnodo &, Tnodo &, Tarista &);
 void insertar_arista(string ambos_valores);
+void generar_dijkstra(string n, string bb, int a, int b);
 
 int main()
 {
@@ -109,9 +112,12 @@ int main()
         else if(string(buf, 0, bytesReceived)== "i_a"){
             cout << "Opcion 2 elegida" << endl;
             temporal = 1;
+        }else if(string(buf, 0, bytesReceived)== "g_d"){
+            cout << "Generar algoritmo, opciones" << endl;
+            temporal = 2;
         }else if(string(buf, 0, bytesReceived)== "m_d"){
             cout << "Mostrar grafo" << endl;
-            mostrar_grafo();
+            mostrar_grafo(0,0);
         }else{ // Demas botones, insetar nodo, etc.
             entro_mensaje(string(buf, 0, bytesReceived));
         }
@@ -129,6 +135,23 @@ void entro_mensaje(string mensaje){
     }else if(temporal == 1){
         cout << "El modo <Insertar arista>, está activo" << endl;
         insertar_arista(mensaje);
+    }else if(temporal == 2){
+        cout << "El modo <Generar Algoritmo>, está activo" << endl;
+
+        // Convierte el string en valores separados
+        int ini, fin;
+        string s = mensaje;
+        string delimiter = ",";
+        size_t pos = 0;
+        string token;
+        while ((pos = s.find(delimiter)) != string::npos) {
+            token = s.substr(0, pos);
+            ini = stoi(token);
+            s.erase(0, pos + delimiter.length());
+        }
+        fin = stoi(s);
+
+        mostrar_grafo(ini, fin);
     }else{
         cout << "Saliendo" << endl;
     }
@@ -185,17 +208,28 @@ void agrega_arista(Tnodo &aux, Tnodo &aux2, Tarista &nuevo)
 void insertar_arista(string ambos_datos){
 
     // Convierte el string en valores separados
-    int ini, fin;
+    cout << ambos_datos << endl;
+    int ini, fin, fin1;
+    int contador = 0 ;
     string s = ambos_datos;
     string delimiter = ",";
     size_t pos = 0;
     string token;
     while ((pos = s.find(delimiter)) != string::npos) {
         token = s.substr(0, pos);
-        ini = stoi(token);
+        if (contador==0){
+            ini = stoi(token);
+            contador = 1;
+        }else{
+            fin = stoi(token);
+        }
         s.erase(0, pos + delimiter.length());
     }
-    fin = stoi(s);
+    fin1 = stoi(s);
+
+    cout << ini << endl;
+    cout << fin << endl;
+    cout << fin1 << endl;
 
     Tarista nuevo=new struct arista;
     Tnodo aux, aux2;
@@ -205,6 +239,7 @@ void insertar_arista(string ambos_datos){
         return;
     }
     nuevo->sgte=NULL;
+    nuevo->peso = fin1;
     aux=p;
     aux2=p;
     while(aux2!=NULL){
@@ -225,11 +260,14 @@ void insertar_arista(string ambos_datos){
 /*                      MOSTRAR GRAFO
     funcion que imprime un grafo en su forma enlazada
 ---------------------------------------------------------------------*/
-void mostrar_grafo(){
+void mostrar_grafo(int a, int b){
     Tnodo ptr;
     Tarista ar;
     ptr=p;
     cout<<"NODO|LISTA DE ADYACENCIA\n";
+
+    string l_n = "";
+    string l_l = "";
 
     string lista_nodos = "";
     string lista_listaAdyacencia = "&";
@@ -240,17 +278,31 @@ void mostrar_grafo(){
         lista_nodos += to_string(ptr->nombre);
         lista_nodos += ",";
 
+        l_n += to_string(ptr->nombre);
+        l_n += ",";
+        l_l += "$";
+
         if(ptr->ady!=NULL){
             ar=ptr->ady;
             while(ar!=NULL){
                 cout<<" "<<ar->destino->nombre;
+                cout << " peso " << ar->peso;
                 lista_listaAdyacencia += to_string(ar->destino->nombre);
                 lista_listaAdyacencia += ",";
+
+                l_l += to_string(ar->destino->nombre);
+                l_l += "p";
+                l_l += to_string(ar->peso);
+                l_l += ",";
+
                 ar=ar->sgte;
             }
         }else{
             lista_listaAdyacencia += ".";
             lista_listaAdyacencia += ",";
+
+            l_l += ".";
+            l_l += ",";
         }
         ptr=ptr->sgte;
         cout<<endl;
@@ -259,4 +311,82 @@ void mostrar_grafo(){
     // Concatenacion de lista_nodos y lista_listaAdyacencia
     string message = lista_nodos + lista_listaAdyacencia;
     send(clientSocket, message.c_str(), message.size() + 1, 0);
+
+    // Quitar letras
+    string bb = "";
+    bb += l_n.erase(l_n.length()-1); // Quitar ultimo
+    string n = "";
+    n += l_l.erase(0,1); // Quitar primero
+    n += "$";
+
+    // Obtener parametros
+    if (temporal == 2){
+         generar_dijkstra(n, bb, a, b);
+    }
+}
+
+void generar_dijkstra(string s, string s1, int a, int b){
+    Grafo g(3);
+    string delimiter = "$";
+    size_t pos = 0;
+    string token;
+
+    string delimiter1 = ",";
+    size_t pos1 = 0;
+    string token1;
+
+    string delimiter2 = ",";
+    size_t pos2 = 0;
+    string token2;
+
+    string delimiter3 = "p";
+    size_t pos3 = 0;
+    string token3;
+
+    while ((pos = s.find(delimiter)) != string::npos) {
+        token = s.substr(0, pos);
+        if (token == ".,") {
+            // Quitar primer simbolo
+            while ((pos1 = s1.find(delimiter1)) != string::npos) {
+                token1 = s1.substr(0, pos1);
+                s1.erase(0, pos1 + delimiter1.length());
+                break;
+            }
+        } else {
+            while ((pos2 = token.find(delimiter2)) != string::npos) { // ,
+                token2 = token.substr(0, pos2); // 1p5
+
+                while ((pos3 = token2.find(delimiter3)) != string::npos) { // p
+                    token3 = token2.substr(0, pos3);
+                    token2.erase(0, pos3 + delimiter3.length());
+                    break;
+                }
+
+                // Obtener primer simbolo
+                while ((pos1 = s1.find(delimiter1)) != string::npos) {
+                    token1 = s1.substr(0, pos1);
+                    break;
+                }
+                // Crear grafo  (0,0,0)
+                g.addAresta(stoi(token1), stoi(token3), stoi(token2));
+                token.erase(0, pos2 + delimiter2.length());
+            }
+            // Quitar primer simbolo
+            while ((pos1 = s1.find(delimiter1)) != string::npos) {
+                token1 = s1.substr(0, pos1);
+                s1.erase(0, pos1 + delimiter1.length());
+                break;
+            }
+        }
+        s.erase(0, pos + delimiter.length());
+    }
+
+    cout << "Camino mas corto: " << endl;
+    //cout << g.dijkstra(a, b) << endl;
+    int camino_corto = g.dijkstra(a, b);
+    cout << camino_corto << endl;
+
+    //string message1 = "";
+    //message1 += to_string(camino_corto);
+    //send(clientSocket, message1.c_str(), message1.size() + 1, 0);
 }

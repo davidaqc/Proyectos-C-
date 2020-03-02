@@ -54,7 +54,7 @@ public:
 
     void retranslateUi(QDialog *Dialog)
     {
-        Dialog->setWindowTitle(QApplication::translate("Dialog", "Dialog", nullptr));
+        Dialog->setWindowTitle(QApplication::translate("Dialog", "Advertencia!!!", nullptr));
         label->setText(QApplication::translate("Dialog", "     Opcion Incorrecta!!!", nullptr));
     } // retranslateUi
 
