@@ -10,13 +10,11 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -28,8 +26,6 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
-    QAction *actionSalir;
-    QAction *actionVentana_1;
     QWidget *centralwidget;
     QLabel *label;
     QLineEdit *lineEdit;
@@ -48,9 +44,8 @@ public:
     QPushButton *pushButton;
     QTableWidget *tableWidget;
     QPushButton *pushButton_4;
+    QPushButton *pushButton_5;
     QMenuBar *menubar;
-    QMenu *menuArchivo;
-    QMenu *menuEdiciones;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -59,15 +54,11 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setEnabled(true);
         MainWindow->resize(700, 500);
-        actionSalir = new QAction(MainWindow);
-        actionSalir->setObjectName(QString::fromUtf8("actionSalir"));
-        actionVentana_1 = new QAction(MainWindow);
-        actionVentana_1->setObjectName(QString::fromUtf8("actionVentana_1"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         label = new QLabel(centralwidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(20, 10, 321, 181));
+        label->setGeometry(QRect(20, 40, 321, 141));
         lineEdit = new QLineEdit(centralwidget);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setGeometry(QRect(190, 190, 41, 25));
@@ -116,27 +107,21 @@ public:
         pushButton->setGeometry(QRect(250, 370, 111, 25));
         tableWidget = new QTableWidget(centralwidget);
         tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
-        tableWidget->setGeometry(QRect(430, 30, 256, 341));
+        tableWidget->setGeometry(QRect(420, 30, 231, 341));
         pushButton_4 = new QPushButton(centralwidget);
         pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
         pushButton_4->setGeometry(QRect(440, 390, 101, 25));
+        pushButton_5 = new QPushButton(centralwidget);
+        pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
+        pushButton_5->setGeometry(QRect(90, 10, 131, 25));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setGeometry(QRect(0, 0, 700, 22));
-        menuArchivo = new QMenu(menubar);
-        menuArchivo->setObjectName(QString::fromUtf8("menuArchivo"));
-        menuEdiciones = new QMenu(menubar);
-        menuEdiciones->setObjectName(QString::fromUtf8("menuEdiciones"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
-
-        menubar->addAction(menuArchivo->menuAction());
-        menubar->addAction(menuEdiciones->menuAction());
-        menuArchivo->addAction(actionSalir);
-        menuEdiciones->addAction(actionVentana_1);
 
         retranslateUi(MainWindow);
 
@@ -146,8 +131,6 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Grafos", nullptr));
-        actionSalir->setText(QApplication::translate("MainWindow", "Salir", nullptr));
-        actionVentana_1->setText(QApplication::translate("MainWindow", "Ventana 1", nullptr));
         label->setText(QApplication::translate("MainWindow", "        REPRESENTACION DE GRAFOS DIRIGIDOS\n"
 "\n"
 " 1. INSERTAR UN NODO                 \n"
@@ -165,8 +148,7 @@ public:
         pushButton_3->setText(QApplication::translate("MainWindow", "Eliminar nodo", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Eliminar arista", nullptr));
         pushButton_4->setText(QApplication::translate("MainWindow", "Mostrar grafo", nullptr));
-        menuArchivo->setTitle(QApplication::translate("MainWindow", "Archivo", nullptr));
-        menuEdiciones->setTitle(QApplication::translate("MainWindow", "Ediciones", nullptr));
+        pushButton_5->setText(QApplication::translate("MainWindow", "Conectar al Server", nullptr));
     } // retranslateUi
 
 };

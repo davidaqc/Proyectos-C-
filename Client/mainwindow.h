@@ -21,11 +21,11 @@ private slots:
 
     void on_aceptar_nodo_clicked();
 
-    void on_actionVentana_1_triggered();
-
     void on_pushButton_4_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_pushButton_5_clicked();
 
 private:
     Ui::MainWindow *ui;

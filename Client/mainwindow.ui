@@ -21,9 +21,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>10</y>
+      <y>40</y>
       <width>321</width>
-      <height>181</height>
+      <height>141</height>
      </rect>
     </property>
     <property name="text">
@@ -220,9 +220,9 @@
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>430</x>
+      <x>420</x>
       <y>30</y>
-      <width>256</width>
+      <width>231</width>
       <height>341</height>
      </rect>
     </property>
@@ -240,6 +240,19 @@
      <string>Mostrar grafo</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>10</y>
+      <width>131</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Conectar al Server</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -250,32 +263,8 @@
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuArchivo">
-    <property name="title">
-     <string>Archivo</string>
-    </property>
-    <addaction name="actionSalir"/>
-   </widget>
-   <widget class="QMenu" name="menuEdiciones">
-    <property name="title">
-     <string>Ediciones</string>
-    </property>
-    <addaction name="actionVentana_1"/>
-   </widget>
-   <addaction name="menuArchivo"/>
-   <addaction name="menuEdiciones"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionSalir">
-   <property name="text">
-    <string>Salir</string>
-   </property>
-  </action>
-  <action name="actionVentana_1">
-   <property name="text">
-    <string>Ventana 1</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>

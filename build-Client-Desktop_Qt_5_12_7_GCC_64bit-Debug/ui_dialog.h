@@ -13,29 +13,37 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_Dialog
 {
 public:
+    QVBoxLayout *verticalLayout;
+    QLabel *label;
     QDialogButtonBox *buttonBox;
-    QLineEdit *lineEdit;
 
     void setupUi(QDialog *Dialog)
     {
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName(QString::fromUtf8("Dialog"));
-        Dialog->resize(400, 300);
+        Dialog->resize(186, 103);
+        verticalLayout = new QVBoxLayout(Dialog);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        label = new QLabel(Dialog);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        verticalLayout->addWidget(label);
+
         buttonBox = new QDialogButtonBox(Dialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setGeometry(QRect(30, 230, 341, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        lineEdit = new QLineEdit(Dialog);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(100, 140, 181, 51));
+
+        verticalLayout->addWidget(buttonBox);
+
 
         retranslateUi(Dialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), Dialog, SLOT(accept()));
@@ -47,6 +55,7 @@ public:
     void retranslateUi(QDialog *Dialog)
     {
         Dialog->setWindowTitle(QApplication::translate("Dialog", "Dialog", nullptr));
+        label->setText(QApplication::translate("Dialog", "     Opcion Incorrecta!!!", nullptr));
     } // retranslateUi
 
 };
