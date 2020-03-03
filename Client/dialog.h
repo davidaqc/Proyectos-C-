@@ -7,6 +7,10 @@ namespace Ui {
 class Dialog;
 }
 
+/**
+ * @brief Ventana de dialogo, envia mensajes de advertencia
+ *
+ */
 class Dialog : public QDialog
 {
     Q_OBJECT
@@ -16,7 +20,7 @@ public:
     ~Dialog();
 
 private:
-    Ui::Dialog *ui;
+    Ui::Dialog *ui; /**< TODO: describe */
 };
 
 #endif // DIALOG_H
