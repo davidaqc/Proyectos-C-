@@ -30,12 +30,12 @@ MainWindow::~MainWindow()
 
 int sock;
 int conexion();
+char buf[4096];
 
 int conexion(){
     //	Create a socket
     sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (sock == -1)
-    {
+    if (sock == -1){
         return 1;
     }
 
@@ -50,17 +50,22 @@ int conexion(){
 
     //	Connect to the server on the socket
     int connectRes = connect(sock, (sockaddr*)&hint, sizeof(hint));
-    if (connectRes == -1)
-    {
+    if (connectRes == -1){
         return 1;
     }
+
+    memset(buf, 0, 4096);
 
     //close(sock);
     return 0;
 }
 
 void MainWindow::enviar_msj(string userInput){
-    send(sock, userInput.c_str(), userInput.size() + 1, 0);
+    //		Send to server
+    int sendRes = send(sock, userInput.c_str(), userInput.size() + 1, 0);
+    if (sendRes == -1){
+        cout << "Could not send to server! Whoops!\r\n";
+    }
 }
 
 void MainWindow::on_aceptar_clicked()
@@ -147,11 +152,10 @@ void MainWindow::on_pushButton_4_clicked(){
         ui->tableWidget->removeRow(0);
     }
 
-    char buf[4096];
-    //		Wait for response
-    memset(buf, 0, 4096);
+    // Recibir msj
     int bytesReceived = recv(sock, buf, 4096, 0);
-    if (bytesReceived == -1){
+    if (bytesReceived == -1)
+    {
         cout << "There was an error getting response from server\r\n";
     }
     else{
@@ -227,11 +231,9 @@ void MainWindow::on_toolButton_clicked(){
     enviar_msj(ambos_datos);
 
     // Recibir msj
-    char buf[4096];
-    //		Wait for response
-    memset(buf, 0, 4096);
     int bytesReceived = recv(sock, buf, 4096, 0);
-    if (bytesReceived == -1){
+    if (bytesReceived == -1)
+    {
         cout << "There was an error getting response from server\r\n";
     }
     else{
