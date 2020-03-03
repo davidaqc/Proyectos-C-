@@ -28,13 +28,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-int sock = socket(AF_INET, SOCK_STREAM, 0);
+int sock;
 int conexion();
 
 int conexion(){
     //	Create a socket
-    cout << "Pausa";
-    //int sock = socket(AF_INET, SOCK_STREAM, 0);
+    sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock == -1)
     {
         return 1;
@@ -55,6 +54,8 @@ int conexion(){
     {
         return 1;
     }
+
+    //close(sock);
     return 0;
 }
 
@@ -137,6 +138,7 @@ void MainWindow::crearVentanaDialogo(){
     ventana1->show();
 }
 
+// Accion de "Mostrar Grafo"
 void MainWindow::on_pushButton_4_clicked(){
 
     enviar_msj("m_d");
@@ -209,6 +211,7 @@ void MainWindow::on_pushButton_5_clicked()
     ui->aceptar->setEnabled(true);
 }
 
+// Accion mostrar valor de camino corto
 void MainWindow::on_toolButton_clicked(){
     enviar_msj("g_d");
     QString a=ui->lineEdit_5->text();
