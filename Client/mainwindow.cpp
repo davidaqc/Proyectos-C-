@@ -2,8 +2,6 @@
 #include "ui_mainwindow.h"
 #include <iostream>
 #include <curses.h>
-
-#include <iostream>
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/socket.h>
@@ -30,29 +28,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-struct nodo{
-            int nombre;//nombre del vertice o nodo
-            struct nodo *sgte;
-            struct arista *ady;//puntero hacia la primera arista del nodo
-            };
-struct arista{
-              struct nodo *destino;//puntero al nodo de llegada
-              struct arista *sgte;
-              };
-typedef struct nodo *Tnodo;//  Tipo Nodo
-typedef struct arista *Tarista; //Tipo Arista
-
-Tnodo p;//puntero cabeza
-
-void vaciar_aristas(Tnodo &);
-void eliminar_nodo();
-void eliminar_arista();
-void mostrar_aristas();
-void crearVentanaDialogo();
-int conexion();
-void enviar_msj();
-
 int sock = socket(AF_INET, SOCK_STREAM, 0);
+int conexion();
 
 int conexion(){
     //	Create a socket
@@ -81,7 +58,7 @@ int conexion(){
     return 0;
 }
 
-void enviar_msj(string userInput){
+void MainWindow::enviar_msj(string userInput){
     send(sock, userInput.c_str(), userInput.size() + 1, 0);
 }
 
@@ -154,7 +131,7 @@ void MainWindow::on_pushButton_2_clicked(){
     enviar_msj(ambos_datos);
 }
 
-void crearVentanaDialogo(){
+void MainWindow::crearVentanaDialogo(){
     Dialog *ventana1 = new Dialog();
     ventana1->setModal(true);
     ventana1->show();
@@ -229,6 +206,7 @@ void MainWindow::on_pushButton_4_clicked(){
 void MainWindow::on_pushButton_5_clicked()
 {
     conexion();
+    ui->aceptar->setEnabled(true);
 }
 
 void MainWindow::on_toolButton_clicked(){
@@ -242,6 +220,7 @@ void MainWindow::on_toolButton_clicked(){
     string ambos_datos = to_string(ini) + "," + to_string(fin);
     ui->lineEdit_5->setText("");
     ui->lineEdit_6->setText("");
+
     enviar_msj(ambos_datos);
 
     // Recibir msj

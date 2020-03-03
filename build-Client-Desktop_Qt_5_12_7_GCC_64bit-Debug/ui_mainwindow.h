@@ -76,6 +76,7 @@ public:
         label_2->setGeometry(QRect(20, 190, 161, 17));
         aceptar = new QPushButton(centralwidget);
         aceptar->setObjectName(QString::fromUtf8("aceptar"));
+        aceptar->setEnabled(false);
         aceptar->setGeometry(QRect(250, 190, 89, 25));
         label_3 = new QLabel(centralwidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));

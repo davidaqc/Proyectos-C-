@@ -8,6 +8,7 @@
 #include <string>
 #include <sstream>
 #include "Grafo.cpp"
+#include "main.h"
 
 using namespace std;
 
@@ -30,12 +31,7 @@ Tnodo p;//puntero cabeza
 int clientSocket;
 int temporal;
 
-void entro_mensaje(string mensaje);
-void insertar_nodo(string valor);
-void mostrar_grafo(int a, int b);
 void agrega_arista(Tnodo &, Tnodo &, Tarista &);
-void insertar_arista(string ambos_valores);
-void generar_dijkstra(string n, string bb, int a, int b);
 
 int main()
 {
@@ -308,9 +304,11 @@ void mostrar_grafo(int a, int b){
         cout<<endl;
     }
 
-    // Concatenacion de lista_nodos y lista_listaAdyacencia
-    string message = lista_nodos + lista_listaAdyacencia;
-    send(clientSocket, message.c_str(), message.size() + 1, 0);
+    if (a==0 && b==0){
+        // Concatenacion de lista_nodos y lista_listaAdyacencia
+        string message = lista_nodos + lista_listaAdyacencia;
+        send(clientSocket, message.c_str(), message.size() + 1, 0);
+    }
 
     // Quitar letras
     string bb = "";
@@ -326,7 +324,27 @@ void mostrar_grafo(int a, int b){
 }
 
 void generar_dijkstra(string s, string s1, int a, int b){
-    Grafo g(3);
+
+    // -------------------------------
+    int tamano_grafo = 0;
+    string temporal = s1;
+    string delimiter_ = ",";
+    size_t pos_ = 0;
+    string token_;
+
+    while ((pos_ = temporal.find(delimiter_)) != string::npos) {
+        token_ = temporal.substr(0, pos_);
+        temporal.erase(0, pos_ + delimiter_.length());
+        tamano_grafo++;
+    }
+    // -----------------------------
+
+    cout << tamano_grafo << endl;
+    cout << s << endl;
+    cout << s1 << endl;
+
+    Grafo g(tamano_grafo+1);
+
     string delimiter = "$";
     size_t pos = 0;
     string token;
@@ -386,7 +404,7 @@ void generar_dijkstra(string s, string s1, int a, int b){
     int camino_corto = g.dijkstra(a, b);
     cout << camino_corto << endl;
 
-    //string message1 = "";
-    //message1 += to_string(camino_corto);
-    //send(clientSocket, message1.c_str(), message1.size() + 1, 0);
+    string message1 = "";
+    message1 += to_string(camino_corto);
+    send(clientSocket, message1.c_str(), message1.size() + 1, 0);
 }

@@ -8,9 +8,9 @@ using namespace std;
 class Grafo
 {
 private:
-    int V; // número de vértices
+    int V; // numero de vertices
 
-    // ponteiro para um array contendo as listas de adjacências
+    // Puntero a un array que contiene la matriz de adyacencia.
     list<pair<int, int> > * adj;
 
 public:
@@ -18,16 +18,17 @@ public:
     // construtor
     Grafo(int V)
     {
-        this->V = V; // atribui o número de vértices
+        this->V = V; // asigna el numero de vertices
 
         /*
-            cria as listas onde cada lista é uma lista de pairs
-            onde cada pair é formado pelo vértice destino e o custo
+        Crea las listas, donde cada lista es una
+        lista de pares, donde cada par
+        está formado por el vértice y el peso
         */
         adj = new list<pair<int, int> >[V];
     }
 
-    // adiciona uma aresta ao grafo de v1 à v2
+    // agrega un arista al grafo de v1 a v2
     void addAresta(int v1, int v2, int custo)
     {
         adj[v1].push_back(make_pair(v2, custo));
@@ -36,40 +37,40 @@ public:
     // algoritmo de Dijkstra
     int dijkstra(int orig, int dest)
     {
-        // vetor de distâncias
+        // vector de distancias
         int dist[V];
 
         /*
-           vetor de visitados serve para caso o vértice já tenha sido
-           expandido (visitado), não expandir mais
+        El vector visitado se usa si el vértice ya
+        se ha expandido (visitado), no se expanda más
         */
         int visitados[V];
 
-        // fila de prioridades de pair (distancia, vértice)
+        // fila de prioridades del par (distancia, vértice)
         priority_queue < pair<int, int>,
                        vector<pair<int, int> >, greater<pair<int, int> > > pq;
 
-        // inicia o vetor de distâncias e visitados
+        // comienza la distancia y el vector visitado
         for(int i = 0; i < V; i++)
         {
             dist[i] = INFINITO;
             visitados[i] = false;
         }
 
-        // a distância de orig para orig é 0
+        // la distancia de origen a origen es 0
         dist[orig] = 0;
 
-        // insere na fila
+        // inserta una fila
         pq.push(make_pair(dist[orig], orig));
 
-        // loop do algoritmo
+        // loop del algoritmo
         while(!pq.empty())
         {
-            pair<int, int> p = pq.top(); // extrai o pair do topo
-            int u = p.second; // obtém o vértice do pair
-            pq.pop(); // remove da fila
+            pair<int, int> p = pq.top(); // extrae el par de la parte superior
+            int u = p.second; // obtiene un vertice del par
+            pq.pop(); // remover una fila
 
-            // verifica se o vértice não foi expandido
+            // verifica que el vértice no se ha expandido
             if(visitados[u] == false)
             {
                 // marca como visitado
@@ -77,17 +78,17 @@ public:
 
                 list<pair<int, int> >::iterator it;
 
-                // percorre os vértices "v" adjacentes de "u"
+                // recorre los vértices adyacentes "v" de "u"
                 for(it = adj[u].begin(); it != adj[u].end(); it++)
                 {
-                    // obtém o vértice adjacente e o custo da aresta
+                    // obtiene el vértice adyacente y el peso del arista
                     int v = it->first;
                     int custo_aresta = it->second;
 
-                    // relaxamento (u, v)
+                    // relajación (u, v)
                     if(dist[v] > (dist[u] + custo_aresta))
                     {
-                        // atualiza a distância de "v" e insere na fila
+                        // actuaaliza la distancia de "v" e inserta una fila
                         dist[v] = dist[u] + custo_aresta;
                         pq.push(make_pair(dist[v], v));
                     }
@@ -95,7 +96,7 @@ public:
             }
         }
 
-        // retorna a distância mínima até o destino
+        // devuelve la distancia mínima al destino
         return dist[dest];
     }
 };

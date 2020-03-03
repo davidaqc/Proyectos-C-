@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <dialog.h>
 
+using namespace std;
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -15,6 +17,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void crearVentanaDialogo();
+    void enviar_msj(string mensaje);
 
 private slots:
     void on_aceptar_clicked();
