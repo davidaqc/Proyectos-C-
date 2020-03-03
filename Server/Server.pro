@@ -29,3 +29,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     Grafo.h \
     main.h
+
+DISTFILES += \
+    html/index.html
